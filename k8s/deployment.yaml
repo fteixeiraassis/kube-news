@@ -24,6 +24,7 @@ spec:
         - name: POSTGRES_PASSWORD
           value: "Pg#123"
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -35,6 +36,7 @@ spec:
     - protocol: TCP
       port: 5432
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -64,6 +66,7 @@ spec:
         - name: DB_HOST 
           value: "postgre"
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
