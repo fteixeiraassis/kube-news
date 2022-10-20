@@ -104,3 +104,6 @@ node_modules/
 # .tern-port
 
 *.Identifier
+
+#Não enviar valores das chaves do terraform
+*.tfvars
