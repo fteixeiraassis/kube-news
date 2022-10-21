@@ -108,4 +108,4 @@ node_modules/
 #Não enviar valores das chaves do terraform
 *.tfvars
 
-*terraform
+terraform/
