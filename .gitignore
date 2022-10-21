@@ -106,8 +106,7 @@ node_modules/
 *.Identifier
 
 #Não enviar valores das chaves do terraform
-*.tfvars
-
-terraform/*.yaml
+terraform/*.tfvars
 terraform/.*
+terraform/*.yaml
 terraform/terraform*
