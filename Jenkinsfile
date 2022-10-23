@@ -30,6 +30,7 @@ pipeline {
                 withKubeConfig([credentialsId: 'kubeconfig']){
                     sh 'sed -i "s/{{TAG}}/$tag_version/g" ./k8s/deployment.yaml'
                     sh 'kubectl apply -f ./k8s/deployment.yaml'
+                    sh 'kubectl apply -f ./Monitoramento/monitoramento.yaml'
                 }
             }
         }
