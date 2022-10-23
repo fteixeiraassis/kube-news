@@ -19,6 +19,25 @@ resource "digitalocean_droplet" "jenkins" {
   region   = var.region
   size     = "s-2vcpu-2gb"
   ssh_keys = [data.digitalocean_ssh_key.devopselite.id]
+
+  #script para criação automática java, jenkins, docker, kubectl
+  connection {
+    host        = self.ipv4_address
+    user        = "root"
+    type        = "ssh"
+    agent      = "true"
+  }
+  provisioner "file" {
+    source      = "installjenkins.sh"
+    destination = "/tmp/installjenkins.sh"
+  }
+  # Change permissions on bash script and execute from ec2-user.
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/installjenkins.sh",
+      "sudo /tmp/installjenkins.sh",
+    ]
+  }
 }
 
 # Add key ssh in provider
@@ -39,6 +58,11 @@ resource "digitalocean_kubernetes_cluster" "k8s" {
   }
 }
 
+resource "local_file" "kube_config" {
+  content  = digitalocean_kubernetes_cluster.k8s.kube_config.0.raw_config
+  filename = "kube_config.yaml"
+}
+
 variable "region" {
   default = ""
 }
@@ -52,10 +76,5 @@ variable "ssh_key_devopselite" {
 }
 
 output "jenkins_ip" {
-    value = digitalocean_droplet.jenkins.ipv4_address
-}
-
-resource "local_file" "kube_config" {
-    content = digitalocean_kubernetes_cluster.k8s.kube_config.0.raw_config
-    filename = "kube_config.yaml"
+  value = digitalocean_droplet.jenkins.ipv4_address
 }

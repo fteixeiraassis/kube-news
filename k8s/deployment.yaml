@@ -53,7 +53,7 @@ spec:
     spec:
       containers:
       - name: kube-news
-        image: fteixeiraassis/kube-news:latest
+        image: fteixeiraassis/kube-news:{(TAG)}
         ports:
         - containerPort: 8080
         env:
